@@ -1,0 +1,52 @@
+{
+  "name": "Lume",
+  "productName": "Lume",
+  "version": "1.0.0",
+  "description": "Lume - leitor de PDF",
+  "main": "main.js",
+  "author": "Lukelme",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.lume.leitor",
+    "productName": "Lume",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "style.css",
+      "script.js",
+      "i18n.js",
+      "lib/**/*",
+      "fonts/**/*"
+    ],
+    "fileAssociations": [
+      { "ext": "pdf", "name": "Documento PDF", "description": "Documento PDF", "role": "Viewer" }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": ["nsis", "portable"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "Lume"
+    },
+    "portable": {
+      "artifactName": "Lume-portatil-${version}.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "^44.7.2",
+    "electron-builder": "^26.15.3"
+  }
+}

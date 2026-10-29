@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-view="library" data-mode="papel">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; worker-src 'self' blob:; connect-src 'self'">
+  <title>Lume — Leitor de PDF</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app" id="app">
+
+    <header class="bar top">
+      <span class="brand only-reader">Lume</span>
+      <button type="button" id="libBtn" class="only-reader">Biblioteca</button>
+      <h1 class="title" id="title">Lume</h1>
+      <button type="button" id="addBtn" class="cta only-library">+ ADD PDF</button>
+      <button type="button" id="tocBtn" class="only-reader" hidden>Sumário</button>
+      <button type="button" id="hlBtn" class="only-reader">Marcações</button>
+      <button type="button" id="bmBtn" class="only-reader" aria-pressed="false">☆ Favoritar</button>
+      <button type="button" id="setBtn" aria-expanded="false">Ajustes</button>
+      <button type="button" id="fsBtn" title="Tela cheia" hidden>Tela cheia</button>
+    </header>
+
+    <main class="stagewrap" id="wrap">
+
+      <!-- Leitor -->
+      <div class="stage" id="stage" tabindex="-1">
+        <div class="doc" id="doc"></div>
+      </div>
+
+      <!-- Biblioteca -->
+      <div class="library" id="library">
+        <div class="lib-inner">
+          <div class="lib-tools" id="libTools" hidden>
+            <label class="search">
+              <span class="visually-hidden">Buscar livros pelo nome</span>
+              <input type="search" id="q" placeholder="Buscar livros pelo nome" autocomplete="off" spellcheck="false" maxlength="60">
+            </label>
+            <div id="sortMenu"></div>
+          </div>
+          <div class="lib-layout" id="libLayout">
+            <nav class="cats" id="chips" aria-label="Categorias" hidden></nav>
+            <div id="libBody"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flash" id="flash"></div>
+
+      <div class="rulerwrap" id="rulerWrap" hidden aria-hidden="true"><div class="ruler" id="ruler"></div></div>
+
+      <section class="panel left toc" id="tocPanel" hidden aria-label="Sumário">
+        <h2>Sumário</h2>
+        <div id="tocList"></div>
+      </section>
+
+      <section class="panel left" id="hlPanel" hidden aria-label="Marcações">
+        <h2>Marcações</h2>
+        <div class="seg tabs" id="hlTabs">
+          <button type="button" data-tab="hl">Trechos</button>
+          <button type="button" data-tab="bm">Páginas</button>
+        </div>
+        <div id="hlList"></div>
+        <button type="button" id="exportBtn" class="wide">Exportar anotações (.md)</button>
+      </section>
+
+      <section class="panel right" id="setPanel" hidden aria-label="Ajustes de leitura">
+        <h2>Ajustes de leitura</h2>
+
+        <div class="row">
+          <span class="lbl">Idioma</span>
+          <div id="langMenu"></div>
+        </div>
+
+        <div class="row">
+          <span class="lbl">Tela</span>
+          <div class="seg" id="modeSeg">
+            <button type="button" data-mode="papel">Papel</button>
+            <button type="button" data-mode="sepia">Sépia</button>
+            <button type="button" data-mode="eink">E-ink</button>
+            <button type="button" data-mode="noite">Noite</button>
+          </div>
+        </div>
+        <div class="row">
+          <span class="lbl">Leitura</span>
+          <div class="seg" id="layoutSeg">
+            <button type="button" data-layout="page">Uma página</button>
+            <button type="button" data-layout="dual">Duas páginas</button>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="scrollMode"> Rolagem</label>
+        <label class="check" id="coverRow" hidden><input type="checkbox" id="coverAlone"> Primeira página sozinha (capa)</label>
+        <div class="row">
+          <span class="lbl">Rolagem automática</span>
+          <button type="button" id="autoBtn" aria-pressed="false">Ligar</button>
+        </div>
+        <div class="row">
+          <label for="autoSpeed">Velocidade da rolagem <output id="autoSpeedVal"></output></label>
+          <input type="range" id="autoSpeed" min="1" max="10" step="1">
+        </div>
+        <div class="row">
+          <label for="bright">Brilho <output id="brightVal"></output></label>
+          <input type="range" id="bright" min="30" max="100" step="1">
+        </div>
+        <div class="row">
+          <label for="warm">Luz quente <output id="warmVal"></output></label>
+          <input type="range" id="warm" min="0" max="100" step="1">
+        </div>
+        <div class="row">
+          <label for="ink">Texto mais escuro <output id="inkVal"></output></label>
+          <input type="range" id="ink" min="0" max="100" step="5">
+        </div>
+        <div class="row">
+          <span class="lbl">Ajuste</span>
+          <div class="seg" id="fitSeg">
+            <button type="button" data-fit="column">Coluna</button>
+            <button type="button" data-fit="width">Largura</button>
+            <button type="button" data-fit="page">Página</button>
+          </div>
+        </div>
+        <div class="row">
+          <span class="lbl">Zoom</span>
+          <div class="zoomrow">
+            <button type="button" id="zoomOut" aria-label="Diminuir zoom">−</button>
+            <div id="zoomMenu"></div>
+            <button type="button" id="zoomIn" aria-label="Aumentar zoom">+</button>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="crop"> Cortar margens do PDF</label>
+
+        <div class="group">
+          <div class="row">
+            <span class="lbl">Régua de leitura (modo foco)</span>
+            <button type="button" id="rulerBtn" aria-pressed="false">Ligar</button>
+          </div>
+          <div class="row">
+            <label for="rulerH">Altura da régua <output id="rulerHVal"></output></label>
+            <input type="range" id="rulerH" min="40" max="240" step="10">
+          </div>
+          <div class="row">
+            <label for="goal">Meta diária de leitura <output id="goalVal"></output></label>
+            <input type="range" id="goal" min="5" max="120" step="5">
+          </div>
+        </div>
+
+        <div class="group" id="einkGroup" hidden>
+          <div class="row">
+            <span class="lbl">Tons de cinza</span>
+            <div id="levelsMenu"></div>
+          </div>
+          <label class="check"><input type="checkbox" id="dither"> Pontilhado nas imagens</label>
+          <label class="check"><input type="checkbox" id="color"> Adicionar cores</label>
+          <div class="row">
+            <span class="lbl">Atualização completa da tela</span>
+            <div id="flashMenu"></div>
+          </div>
+        </div>
+
+        <button type="button" id="keysBtn" class="wide">Ver todos os atalhos (?)</button>
+      </section>
+
+      <section class="panel center keys" id="keysPanel" hidden aria-label="Atalhos do teclado">
+        <div class="keys-head">
+          <h2>Atalhos e comandos</h2>
+          <button type="button" id="keysClose" aria-label="Fechar">×</button>
+        </div>
+
+        <div id="keysBody"></div>
+      </section>
+
+      <!-- Barra que aparece ao selecionar texto ou tocar numa marcação -->
+      <div class="selbar" id="selBar" hidden role="toolbar" aria-label="Marcador de texto">
+        <div class="swatches" id="swatches">
+          <button type="button" class="sw" data-c="yellow" aria-label="Marcar de amarelo" title="Amarelo (1)"></button>
+          <button type="button" class="sw" data-c="green" aria-label="Marcar de verde" title="Verde (2)"></button>
+          <button type="button" class="sw" data-c="blue" aria-label="Marcar de azul" title="Azul (3)"></button>
+          <button type="button" class="sw" data-c="pink" aria-label="Marcar de rosa" title="Rosa (4)"></button>
+        </div>
+        <span id="webMenu"></span>
+        <button type="button" id="copyBtn">Copiar</button>
+        <button type="button" id="noteBtn" hidden>Nota</button>
+        <button type="button" id="rmBtn" hidden>Remover</button>
+      </div>
+
+      <button type="button" class="autopill" id="autoPill" hidden>Pausar rolagem automática</button>
+
+      <div class="findbar" id="findBar" hidden role="search" aria-label="Buscar no PDF">
+        <input type="text" id="findIn" maxlength="60" placeholder="Buscar no PDF" autocomplete="off" spellcheck="false" aria-label="Buscar no PDF">
+        <output id="findCount" aria-live="polite"></output>
+        <button type="button" id="findPrev" aria-label="Resultado anterior">‹</button>
+        <button type="button" id="findNext" aria-label="Próximo resultado">›</button>
+        <button type="button" id="findClose" aria-label="Fechar busca">×</button>
+      </div>
+
+      <!-- Barra da biblioteca ao selecionar vários livros (montada pelo script) -->
+      <div class="libsel" id="libSel" hidden></div>
+
+      <div class="toast" id="toast" role="status" hidden></div>
+    </main>
+
+    <footer class="bar bottom">
+      <button type="button" class="nav" id="prevBtn" aria-label="Página anterior">‹</button>
+      <input type="range" id="slider" min="1" max="1" value="1" step="1" aria-label="Ir para a página">
+      <div class="pagein">
+        <input type="number" id="pageIn" min="1" value="1" inputmode="numeric" aria-label="Número da página">
+        <span id="pageTotal">/ 1</span>
+      </div>
+      <button type="button" class="nav" id="nextBtn" aria-label="Próxima página">›</button>
+      <div class="pbar" id="pbar" aria-hidden="true"><i id="pbarFill"></i></div>
+      <span class="pcount" id="pcount"></span>
+    </footer>
+
+    <div class="status" id="status" aria-live="off">
+      <span id="stTitle"></span>
+      <span id="stPage"></span>
+      <span id="stPct"></span>
+    </div>
+  </div>
+
+  <!-- Tela de escolha de idioma (só no primeiro uso) -->
+  <div class="setup" id="setup" hidden role="dialog" aria-modal="true" aria-labelledby="setupTitle">
+    <div class="setup-box">
+      <h1 id="setupTitle">Lume</h1>
+      <p>Escolha seu idioma · Choose your language · Elige tu idioma</p>
+      <div class="setup-langs" id="setupLangs">
+        <button type="button" data-lang="pt">Português</button>
+        <button type="button" data-lang="en">English</button>
+        <button type="button" data-lang="es">Español</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="warm" id="warmEl"></div>
+  <input type="file" id="file" accept="application/pdf,.pdf" multiple hidden>
+  <input type="file" id="backupFile" accept=".lume,.folha" hidden>
+
+  <script src="script.js"></script>
+  <script src="lib/pdf.min.js"></script>
+  <script src="i18n.js"></script>
+ 
+</body>
+</html>
