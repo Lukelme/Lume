@@ -8,7 +8,6 @@
 
   console.log('[Lume] script.js começou a executar em ' + Math.round(performance.now()) + ' ms');
 
-  // Ponte com o Electron (definida no preload.js): "Lume"; o nome antigo "folha" também é aceito
   const native = window.Lume || window.folha || null;
 
   // Seleção de texto. O texto selecionável do PDF costuma ficar mais curto que o texto desenhado (letras espaçadas, justificado).
