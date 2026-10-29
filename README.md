@@ -25,7 +25,7 @@ estatísticas de leitura e telas que imitam papel e Kindle.
 
 |  **Instalador (Setup)** |  **Versão portátil** |
 |:---:|:---:|
-| [**⬇ Baixar Lume-Setup.exe**](https://github.com/lukelme/lume/releases/download/v1.0.0/Lume-Setup.1.0.0.exe) | [**⬇ Baixar Lume-Portatil.exe**](https://github.com/Lukelme/Lume/releases/download/v1.0.0/Lume-portatil-1.0.0.exe) |
+| [**⬇ Baixar Lume-Setup.exe**](https://github.com/Lukelme/Lume/releases/download/v1.0.0/Lume.Setup.1.0.0.exe) | [**⬇ Baixar Lume-Portatil.exe**](https://github.com/Lukelme/Lume/releases/download/v1.0.0/Lume-portatil-1.0.0.exe) |
 | Instala no computador, cria atalhos e pode abrir junto com o Windows. | Não precisa instalar: é só abrir o arquivo. Ótimo para pendrive. |
 
 </div>
