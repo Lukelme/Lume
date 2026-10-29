@@ -7,13 +7,12 @@
 Leve, offline e feito para ler de verdade: biblioteca com capas, marcações, notas,\
 estatísticas de leitura e telas que imitam papel e Kindle.
 
-[![Última versão](https://img.shields.io/github/v/release/Lukelme/lume?style=for-the-badge&label=vers%C3%A3o&color=2a2620)](https://github.com/Lukelme/lume/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/Lukelme/lume/total?style=for-the-badge&label=downloads&color=6f6757)](https://github.com/SEU-Lukelme/lume/releases)
 ![Plataforma](https://img.shields.io/badge/Windows-10%20%7C%2011-2a2620?style=for-the-badge)
 ![Idiomas](https://img.shields.io/badge/idiomas-PT%20%C2%B7%20EN%20%C2%B7%20ES-6f6757?style=for-the-badge)
 
 <!-- Troque pelo print real do app: coloque a imagem em docs/ e ajuste o nome abaixo -->
 <img src="docs/biblioteca.png" alt="Biblioteca do Lume" width="760">
+<img src="docs/texto.png" alt="Leitura do Lume " width="760">
 
 </div>
 
@@ -139,12 +138,6 @@ lume/
 ├── fonts/         # Literata e IBM Plex Sans
 └── build/         # ícones
 ```
-
----
-
-## Licença
-
-Distribuído sob a licença **MIT**. Veja o arquivo [`LICENSE`](LICENSE).
 
 ---
 
