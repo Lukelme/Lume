@@ -7,8 +7,8 @@
 Leve, offline e feito para ler de verdade: biblioteca com capas, marcações, notas,\
 estatísticas de leitura e telas que imitam papel e Kindle.
 
-[![Última versão](https://img.shields.io/github/v/release/SEU-USUARIO/lume?style=for-the-badge&label=vers%C3%A3o&color=2a2620)](https://github.com/SEU-USUARIO/lume/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/SEU-USUARIO/lume/total?style=for-the-badge&label=downloads&color=6f6757)](https://github.com/SEU-USUARIO/lume/releases)
+[![Última versão](https://img.shields.io/github/v/release/Lukelme/lume?style=for-the-badge&label=vers%C3%A3o&color=2a2620)](https://github.com/Lukelme/lume/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/Lukelme/lume/total?style=for-the-badge&label=downloads&color=6f6757)](https://github.com/SEU-Lukelme/lume/releases)
 ![Plataforma](https://img.shields.io/badge/Windows-10%20%7C%2011-2a2620?style=for-the-badge)
 ![Idiomas](https://img.shields.io/badge/idiomas-PT%20%C2%B7%20EN%20%C2%B7%20ES-6f6757?style=for-the-badge)
 
@@ -25,7 +25,7 @@ estatísticas de leitura e telas que imitam papel e Kindle.
 
 |  **Instalador (Setup)** |  **Versão portátil** |
 |:---:|:---:|
-| [**⬇ Baixar Lume-Setup.exe**](https://github.com/lukelme/lume/releases/latest/download/Lume-Setup.exe) | [**⬇ Baixar Lume-Portatil.exe**](https://github.com/lukelme/lume/releases/latest/download/Lume-Portatil.exe) |
+| [**⬇ Baixar Lume-Setup.exe**](sha256:49e07cdee209e384125d71e536617c7afef614e6a99acd8e40fe0f87d902b7a4) | [**⬇ Baixar Lume-Portatil.exe**](https://github.com/lukelme/lume/releases/latest/download/Lume-Portatil.exe) |
 | Instala no computador, cria atalhos e pode abrir junto com o Windows. | Não precisa instalar: é só abrir o arquivo. Ótimo para pendrive. |
 
 </div>
